@@ -148,15 +148,15 @@ export default function SelectPage({ onStart }) {
       {/* HEADER */}
       <header className="select-header">
         <div className="header-inner">
-          {/* 뒤로가기: 브라우저 히스토리 대신 /home 으로 명시적 이동 */}
-          <button className="icon-back" aria-label="뒤로가기" onClick={() => navigate('/home')}>
+          {/* 뒤로가기: 브라우저 히스토리로 이전 페이지 이동 */}
+          <button className="icon-back" aria-label="뒤로가기" onClick={() => navigate(-1)}>
             ←
           </button>
           <div className="brand">
             <div className="brand-icon">📘</div>
             <h1 className="brand-title">학습 플랫폼</h1>
           </div>
-          <a className="link-home" href="/">메인으로</a>
+          <button className="link-home" onClick={() => navigate('/home')}>메인으로</button>
         </div>
       </header>
 

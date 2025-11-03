@@ -1,17 +1,15 @@
-import React from 'react'
-import SelectPage from '../../components/SelectCourse/selectPage'
-import { useNavigate } from 'react-router-dom'
+// src/pages/SelectCourse/LandingPage.jsx
+import { useNavigate } from "react-router-dom";
+import SelectPage from "../../components/SelectCourse/selectPage";
 
 export default function LandingPage() {
   const navigate = useNavigate();
 
   const handleStart = (payload) => {
+    // TODO: /quiz 또는 /exam으로 이동
     console.log('학습 시작:', payload);
-    // TODO: 선택한 설정으로 학습 페이지로 이동
-    // navigate('/home', { state: payload });
+    // navigate("/exam", { state: payload });
   };
 
-  return (
-    <SelectPage onStart={handleStart} />
-  )
+  return <SelectPage onStart={handleStart} />;
 }

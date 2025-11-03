@@ -4,10 +4,12 @@
 // - 추후 연동: 통계/최근활동은 백엔드 API 연동 예정
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useTheme } from '../../contexts/ThemeContext';
 import '../../styles/home.css';
 
 export default function Home() {
   const navigate = useNavigate();
+  const { theme, toggleTheme } = useTheme();
 
   // ============================================
   // 사용자 로그인 상태 관리
@@ -159,6 +161,11 @@ export default function Home() {
             <h1 className="brand-title">학습 플랫폼</h1>
           </div>
           <div className="header-actions">
+            {/* 테마 토글 버튼 */}
+            <button className="header-btn theme-toggle" onClick={toggleTheme}>
+              {theme === 'dark' ? '☀️ 라이트' : '🌙 다크'}
+            </button>
+            
             {/* 마이페이지 버튼 - 로그인 상태에서만 표시 */}
             {isLoggedIn && (
               <button className="header-btn" onClick={handleMyPage}>
@@ -246,7 +253,7 @@ export default function Home() {
           {/* TODO: navigate('/study/continue') 로 이동 */}
           <div className="action-card blue" onClick={handleContinueStudy}>
             <div className="action-icon-box blue">🔖</div>
-            <h3 className="action-title">아이서 학습</h3>
+            <h3 className="action-title">이어서 학습</h3>
             <p className="action-desc">이전 학습 이어가기</p>
             <button className="action-btn">시작하기 →</button>
           </div>
