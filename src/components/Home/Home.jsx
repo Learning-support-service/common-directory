@@ -20,28 +20,25 @@ export default function Home() {
   const [userName, setUserName] = useState('사용자');
 
   useEffect(() => {
-    // (인증) 로그인한 사용자 정보 가져오기
-    // 계약: GET /api/auth/me → { id, email, name }
-    // 쿠키 기반 인증이라 credentials: 'include' 필수
+    // localStorage에서 로그인한 사용자 정보 가져오기
     const fetchUser = async () => {
       try {
-        const res = await fetch('/api/auth/me', { credentials: 'include' })
-        if (res.ok) {
-          const data = await res.json()
-          console.log('User data from /api/auth/me:', data)
-          console.log('Name field:', data.name)
-          console.log('Type of name:', typeof data.name)
-          if (data.name) {
-            setUserName(data.name)
-          } else {
-            console.warn('Name is missing or falsy:', data.name)
+        const currentUserData = localStorage.getItem('currentUser')
+        if (currentUserData) {
+          const user = JSON.parse(currentUserData)
+          console.log('User data from localStorage:', user)
+          console.log('Name field:', user.name)
+          if (user.name) {
+            setUserName(user.name)
           }
         } else {
-          console.log('Failed to fetch user:', res.status)
+          console.log('No user logged in')
+          setUserName('사용자')
         }
       } catch (e) {
         console.error('Error fetching user:', e)
         // 에러 시 기본값 유지
+        setUserName('사용자')
       }
     }
     fetchUser()
@@ -129,13 +126,12 @@ export default function Home() {
   // 로그인/로그아웃 처리
   const handleAuthToggle = () => {
     if (isLoggedIn) {
-      // 로그아웃 처리
-      // TODO: 실제로는 백엔드 API 호출 필요
-      // API: POST /api/auth/logout
-      // 로그아웃 후 토큰 제거, 상태 초기화
+      // 로그아웃 처리 - localStorage에서 현재 사용자 정보 제거
+      localStorage.removeItem('currentUser');
       setIsLoggedIn(false);
-      // navigate('/auth/login');
-      console.log('로그아웃 처리 (구현 예정)');
+      setUserName('사용자');
+      navigate('/auth/login');
+      console.log('로그아웃 완료');
     } else {
       // 로그인 페이지로 이동
       navigate('/auth/login');
@@ -158,7 +154,7 @@ export default function Home() {
         <div className="header-content">
           <div className="brand">
             <div className="brand-icon">📘</div>
-            <h1 className="brand-title">학습 플랫폼</h1>
+            <h1 className="brand-title">CSTime</h1>
           </div>
           <div className="header-actions">
             {/* 테마 토글 버튼 */}

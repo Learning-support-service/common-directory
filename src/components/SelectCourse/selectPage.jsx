@@ -150,11 +150,11 @@ export default function SelectPage({ onStart }) {
         <div className="header-inner">
           {/* 뒤로가기: 브라우저 히스토리로 이전 페이지 이동 */}
           <button className="icon-back" aria-label="뒤로가기" onClick={() => navigate(-1)}>
-            ←
+           ←  Back 
           </button>
           <div className="brand">
             <div className="brand-icon">📘</div>
-            <h1 className="brand-title">학습 플랫폼</h1>
+            <h1 className="brand-title">CSTime</h1>
           </div>
           <button className="link-home" onClick={() => navigate('/home')}>메인으로</button>
         </div>
@@ -243,7 +243,7 @@ export default function SelectPage({ onStart }) {
                     handleStart에서 mode 값에 따라 navigate('/quiz'|'/exam', { state: payload })로 분기) */}
                 <ModeCard
                   active={mode === "quiz"}
-                  highlight
+        
                   title="퀴즈 모드"
                   desc="정답 즉시 확인"
                   onClick={() => setMode("quiz")}

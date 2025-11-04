@@ -13,7 +13,7 @@ export default function Login() {
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
 
-  // 폼 제출 처리: 기본 검증 후 백엔드 로그인 API 호출
+  // 폼 제출 처리: 기본 검증 후 localStorage에서 사용자 확인
   const onSubmit = async (e) => {
     e.preventDefault()
     setError('')
@@ -30,16 +30,26 @@ export default function Login() {
 
     try {
       setLoading(true)
-      const res = await fetch('/api/auth/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        credentials: 'include',
-        body: JSON.stringify({ email, password }),
-      })
-      if (!res.ok) {
-        const data = await res.json().catch(() => ({}))
-        throw new Error(data?.message || '로그인 실패')
+      
+      // localStorage에서 사용자 목록 가져오기
+      const usersData = localStorage.getItem('users')
+      const users = usersData ? JSON.parse(usersData) : []
+      
+      // 이메일과 비밀번호가 일치하는 사용자 찾기
+      const user = users.find(u => u.email === email && u.password === password)
+      
+      if (!user) {
+        setError('이메일 또는 비밀번호가 잘못되었습니다.')
+        return
       }
+      
+      // 로그인 성공 - 현재 로그인한 사용자 정보 저장
+      localStorage.setItem('currentUser', JSON.stringify({
+        email: user.email,
+        name: user.name,
+        loginAt: new Date().toISOString()
+      }))
+      
       navigate('/home', { replace: true })
     } catch (e) {
       setError(e.message || '로그인에 실패했습니다. 다시 시도해주세요.')

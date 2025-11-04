@@ -16,7 +16,7 @@ export default function SignIn() {
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
 
-  // 폼 제출 처리: 기본 유효성 검사 후 백엔드 회원가입 API 호출
+  // 폼 제출 처리: 유효성 검사 후 localStorage에 사용자 정보 저장
   const onSubmit = async (e) => {
     e.preventDefault()
     setError('')
@@ -44,17 +44,32 @@ export default function SignIn() {
 
     try {
       setLoading(true)
-      const res = await fetch('/api/auth/sign-up', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, name, password }),
-      })
-      if (res.status === 201) {
-        navigate('/auth/login', { replace: true })
+      
+      // localStorage에서 기존 사용자 목록 가져오기
+      const usersData = localStorage.getItem('users')
+      const users = usersData ? JSON.parse(usersData) : []
+      
+      // 이메일 중복 체크
+      const existingUser = users.find(user => user.email === email)
+      if (existingUser) {
+        setError('이미 등록된 이메일입니다.')
         return
       }
-      const data = await res.json().catch(() => ({}))
-      throw new Error(data?.message || '회원가입 실패')
+      
+      // 새 사용자 추가
+      const newUser = {
+        email,
+        name,
+        password,
+        createdAt: new Date().toISOString()
+      }
+      users.push(newUser)
+      
+      // localStorage에 저장
+      localStorage.setItem('users', JSON.stringify(users))
+      
+      // 회원가입 성공 - 로그인 페이지로 이동
+      navigate('/auth/login', { replace: true })
     } catch (e) {
       setError(e.message || '회원가입에 실패했습니다. 다시 시도해주세요.')
     } finally {
