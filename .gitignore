@@ -1,0 +1,34 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+node_modules
+dist
+dist-ssr
+*.local
+
+# App data (exclude problem sets or large datasets)
+public/data/
+
+# Server secrets and local DB (safety net; also covered by server/.gitignore)
+server/.env
+server/prisma/*.db
+server/prisma/*.db-journal
+server/prisma/**/*.db
+server/prisma/**/*.db-journal
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
