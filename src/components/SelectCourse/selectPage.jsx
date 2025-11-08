@@ -154,7 +154,7 @@ export default function SelectPage({ onStart }) {
           </button>
           <div className="brand">
             <div className="brand-icon">📘</div>
-            <h1 className="brand-title">CSTime</h1>
+            <h1 className="brand-title">CS Time</h1>
           </div>
           <button className="link-home" onClick={() => navigate('/home')}>메인으로</button>
         </div>

@@ -5,16 +5,8 @@ const MyPage = () => {
     const navigate = useNavigate()
     return (
         <div>
-            <header className="home-header">
-                <div className="header-content">
-                    <div className="brand">
-                        <div className="brand-icon">📘</div>
-                        <h1 className="brand-title">마이페이지</h1>
-                    </div>
-                </div>
-            </header>
             <div>
-                {/*상단 탭 메뉴*/}
+                {/*상단 탭 메뉴 (헤더는 레이아웃에서 렌더링) */}
                 <nav className='selectTab'>
                     <span onClick={() => navigate("/mypage")}>대시보드</span>
                     <span onClick={() => navigate("/mypage/study-anal")}>학습 분석</span>

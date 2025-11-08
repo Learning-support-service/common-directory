@@ -12,6 +12,18 @@
   transition: background 0.3s ease, color 0.3s ease;
 }
 
+/* App shell used on the top-level dashboard wrapper so theme variables apply app-wide */
+.app-shell {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: radial-gradient(1200px 600px at 10% 10%, var(--bg-gradient-1), rgba(255,255,255,0) 60%),
+              radial-gradient(1000px 500px at 90% 0%, var(--bg-gradient-2), rgba(255,255,255,0) 60%),
+              var(--bg-primary);
+  color: var(--text-secondary);
+  transition: background 0.25s ease, color 0.25s ease;
+}
+
 /* Header */
 .home-header {
   position: sticky;
@@ -21,6 +33,14 @@
   border-bottom: 1px solid var(--header-border);
   z-index: 10;
   padding: 0 24px;
+}
+
+/* global top header that sits above dashboard */
+.global-top-header {
+  /* use theme variables so header colors follow dark/light mode */
+  background: var(--header-bg);
+  border-bottom: 1px solid var(--header-border);
+  backdrop-filter: saturate(180%) blur(6px);
 }
 
 .header-content {
@@ -63,6 +83,7 @@
   display: flex;
   gap: 10px;
 }
+
 
 .header-btn {
   padding: 10px 16px;

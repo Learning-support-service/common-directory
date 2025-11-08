@@ -49,7 +49,13 @@ export default function Login() {
         name: user.name,
         loginAt: new Date().toISOString()
       }))
-      
+      // set default theme to dark on login (persist and notify ThemeProvider)
+      try {
+        localStorage.setItem('theme', 'dark')
+        window.dispatchEvent(new CustomEvent('theme-updated', { detail: 'dark' }))
+      } catch (e) {}
+      // notify other components in the same window
+      try { window.dispatchEvent(new CustomEvent('user-updated')) } catch(e) {}
       navigate('/home', { replace: true })
     } catch (e) {
       setError(e.message || '로그인에 실패했습니다. 다시 시도해주세요.')

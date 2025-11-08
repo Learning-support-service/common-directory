@@ -15,6 +15,27 @@ export function ThemeProvider({ children }) {
     document.documentElement.setAttribute('data-theme', theme);
   }, [theme]);
 
+  // 듣기: 같은 창에서 외부로부터 테마 업데이트 요청을 받을 때 적용
+  useEffect(() => {
+    const onThemeUpdated = (e) => {
+      try {
+        const t = e && e.detail ? e.detail : null
+        if (t) setTheme(t)
+      } catch (e) {}
+    }
+    const onStorage = (e) => {
+      if (e.key === 'theme') {
+        try { setTheme(e.newValue || 'dark') } catch (e) {}
+      }
+    }
+    window.addEventListener('theme-updated', onThemeUpdated)
+    window.addEventListener('storage', onStorage)
+    return () => {
+      window.removeEventListener('theme-updated', onThemeUpdated)
+      window.removeEventListener('storage', onStorage)
+    }
+  }, [])
+
   const toggleTheme = () => {
     setTheme(prevTheme => prevTheme === 'dark' ? 'light' : 'dark');
   };

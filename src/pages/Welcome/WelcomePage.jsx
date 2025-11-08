@@ -14,16 +14,7 @@ export default function WelcomePage() {
 
   return (
     <div className="welcome-root">
-  {/* 상단 네비게이션 바 */}
-      <header className="welcome-nav">
-        <div className="welcome-container nav-inner">
-          <div className="brand" onClick={() => navigate('/')}>� StudyApp</div>
-          <div className="nav-actions">
-            <button className="btn ghost" onClick={goLogin}>로그인</button>
-            <button className="btn primary" onClick={goSignUp}>회원가입</button>
-          </div>
-        </div>
-      </header>
+  {/* header is provided globally by layout; keep hero only */}
 
   {/* 히어로 섹션: 핵심 가치 제안 + CTA */}
       <main className="welcome-hero">

@@ -15,33 +15,28 @@ export default function Home() {
   // 사용자 로그인 상태 관리
   // ============================================
   // 로그인 토글(데모용). 실제 앱에서는 전역 상태/세션 검사로 관리 권장
-  const [isLoggedIn, setIsLoggedIn] = useState(true);
+  const [isLoggedIn, setIsLoggedIn] = useState(() => !!localStorage.getItem('currentUser'));
   // 인사말 표시용 사용자 이름. 기본값은 "사용자"
-  const [userName, setUserName] = useState('사용자');
+  const [userName, setUserName] = useState(() => {
+    try {
+      const cu = localStorage.getItem('currentUser')
+      return cu ? JSON.parse(cu).name || '사용자' : '사용자'
+    } catch { return '사용자' }
+  })
 
   useEffect(() => {
-    // localStorage에서 로그인한 사용자 정보 가져오기
-    const fetchUser = async () => {
-      try {
-        const currentUserData = localStorage.getItem('currentUser')
-        if (currentUserData) {
-          const user = JSON.parse(currentUserData)
-          console.log('User data from localStorage:', user)
-          console.log('Name field:', user.name)
-          if (user.name) {
-            setUserName(user.name)
-          }
-        } else {
-          console.log('No user logged in')
-          setUserName('사용자')
-        }
-      } catch (e) {
-        console.error('Error fetching user:', e)
-        // 에러 시 기본값 유지
-        setUserName('사용자')
-      }
+    const onStorage = () => {
+      const cu = localStorage.getItem('currentUser')
+      setIsLoggedIn(!!cu)
+      try { setUserName(cu ? JSON.parse(cu).name || '사용자' : '사용자') } catch { setUserName('사용자') }
     }
-    fetchUser()
+    const onUserUpdated = () => onStorage()
+    window.addEventListener('storage', onStorage)
+    window.addEventListener('user-updated', onUserUpdated)
+    return () => {
+      window.removeEventListener('storage', onStorage)
+      window.removeEventListener('user-updated', onUserUpdated)
+    }
   }, [])
 
   // ============================================
@@ -147,35 +142,7 @@ export default function Home() {
 
   return (
     <div className="home-container">
-      {/* ============================================ */}
-      {/* 헤더 */}
-      {/* ============================================ */}
-      <header className="home-header">
-        <div className="header-content">
-          <div className="brand">
-            <div className="brand-icon">📘</div>
-            <h1 className="brand-title">CSTime</h1>
-          </div>
-          <div className="header-actions">
-            {/* 테마 토글 버튼 */}
-            <button className="header-btn theme-toggle" onClick={toggleTheme}>
-              {theme === 'dark' ? '☀️ 라이트' : '🌙 다크'}
-            </button>
-            
-            {/* 마이페이지 버튼 - 로그인 상태에서만 표시 */}
-            {isLoggedIn && (
-              <button className="header-btn" onClick={handleMyPage}>
-                👤 마이페이지
-              </button>
-            )}
-            
-            {/* 로그인/로그아웃 토글 버튼 */}
-            <button className="header-btn" onClick={handleAuthToggle}>
-              {isLoggedIn ? '📋 로그아웃' : '🔐 로그인'}
-            </button>
-          </div>
-        </div>
-      </header>
+  {/* header is provided globally by the layout */}
 
       {/* ============================================ */}
       {/* 메인 컨텐츠 */}
