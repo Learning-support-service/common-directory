@@ -4,8 +4,9 @@ export default function DashBoard() {
   return (
     <div className="
       flex flex-col relative
-      w-[375px] min-h-screen bg-white shadow-md
-      max-[480px]:w-full
+      w-full min-h-screen bg-white shadow-md
+      max-w-[1200px] mx-auto
+      px-4
     ">
       {/* <header>
         <p>학습 플랫폼</p>

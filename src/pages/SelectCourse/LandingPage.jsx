@@ -6,9 +6,10 @@ export default function LandingPage() {
   const navigate = useNavigate();
 
   const handleStart = (payload) => {
-    // TODO: /quiz 또는 /exam으로 이동
-    console.log('학습 시작:', payload);
-    // navigate("/exam", { state: payload });
+    // payload에는 subject, difficulty, mode, studyTimeMin 등이 포함되어 있음
+    navigate("/problem", { 
+      state: payload 
+    });
   };
 
   return <SelectPage onStart={handleStart} />;
