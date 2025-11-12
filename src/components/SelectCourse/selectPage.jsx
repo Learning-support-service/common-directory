@@ -48,15 +48,10 @@ import "../../styles/select.css";
  * onStart(optional): (payload) => void
  *  payload = { subject, difficulty, mode, studyTimeMin }
  */
-export default function SelectPage({ onStart }) {
+export default function SelectPage({ onStart, ...props }) {
   // 라우팅을 위한 navigate 훅
   const navigate = useNavigate();
-  // 섹션 표시 토글(HIDE ON/OFF)
-  // - true: 섹션 노출 및 값 필요(시작 조건에 반영)
-  // - false: 섹션 숨김 및 값 불필요(시작 조건에서 제외)
-  const [showDifficulty, setShowDifficulty] = useState(true);
-  const [showMode, setShowMode] = useState(true);
-  const [showTime, setShowTime] = useState(true);
+  // HIDE 기능 제거: 모든 섹션 항상 표시
 
   // 선택 상태
   const [subject, setSubject] = useState(null);
@@ -64,70 +59,72 @@ export default function SelectPage({ onStart }) {
   const [mode, setMode] = useState(null);
   const [studyTime, setStudyTime] = useState(30); // 분 (10~120)
 
-  /**
-   * [추가 예정] 문제 데이터 로딩 가이드
-   * - 과목/난이도 변경될 때마다 문제 세트를 로드하는 흐름입니다.
-   * - 아래 코드는 예시이며, 실제 구현 시 주석 해제 후 API/파일 경로를 맞춰주세요.
-   */
-  // (문제 데이터 로딩) 여기에 추가 (구현방법 : subject/difficulty 의존성 useEffect에서 과목별 JSON fetch →
-  //  difficulty 키로 필터링해 setProblems(list) 수행. public/data/problems/*.json 또는 API 사용)
-  // const [problems, setProblems] = useState([]); // 선택된 문제 리스트
-  // React.useEffect(() => {
-  //   if (!subject) return;
-  //   const urlMap = {
-  //     os:  "/data/problems/os.json",
-  //     ds:  "/data/problems/ds.json",
-  //     web: "/data/problems/web.json",
-  //   };
-  //   fetch(urlMap[subject])
-  //     .then((res) => res.json())
-  //     .then((json) => {
-  //       // json.difficulties["초급" | "중급" | "고급"] 형태라고 가정
-  //       const list = difficulty ? (json.difficulties[difficulty] || []) : [];
-  //       setProblems(list);
-  //     })
-  //     .catch(console.error);
-  // }, [subject, difficulty]);
+  // 문제 데이터 상태 관리
+  const [problems, setProblems] = useState([]); // 선택된 문제 리스트
+
+  // 과목/난이도가 변경될 때마다 문제 데이터 로드
+  React.useEffect(() => {
+    if (!subject) return;
+    
+    const urlMap = {
+      os: "/data/problems/os.json",
+      ds: "/data/problems/ds.json",
+      web: "/data/problems/web.json",
+    };
+
+    fetch(urlMap[subject])
+      .then((res) => res.json())
+      .then((json) => {
+        // 난이도에 따른 문제 필터링
+        const list = difficulty ? (json.difficulties[difficulty] || []) : [];
+        setProblems(list);
+      })
+      .catch(console.error);
+  }, [subject, difficulty]);
 
   // 유효성 검사: 시작 버튼 활성화 조건
   const canStart = useMemo(() => {
-    // - 과목(subject): 항상 필수
-    // - 난이도(difficulty): 섹션이 보일 때만 필수(showDifficulty)
-    // - 모드(mode): 섹션이 보일 때만 필수(showMode)
-    // - 시간(studyTime): 시작 여부와 무관하며 exam 모드일 때만 의미 있게 사용
-    return !!subject && (!!difficulty || !showDifficulty) && (!!mode || !showMode);
-  }, [subject, difficulty, mode, showDifficulty, showMode]);
+    // 과목, 난이도, 모드 모두 필수
+    return !!subject && !!difficulty && !!mode;
+  }, [subject, difficulty, mode]);
 
-  const handleStart = () => {
+  const handleStart = async () => {
     if (!canStart) return;
-    const payload = {
+    let payload = {
       subject,
-      difficulty: showDifficulty ? difficulty : null,
-      mode: showMode ? mode : null,
-      studyTimeMin: showTime ? Number(studyTime) : null,
-      // [확장 필드 제안]
-      // problems,            // 위 useEffect로 로딩한 문제 배열
-      // problemCount: problems?.length,
+      difficulty,
+      mode,
+      studyTimeMin: Number(studyTime),
+      problems: problems,
+      problemCount: problems?.length,
     };
 
-    /**
-     * [시작 동작 가이드]
-     * - 퀴즈 모드(quiz): 즉시 채점형 퀴즈 화면으로 이동
-     *     navigate('/quiz', { state: payload })
-     * - 시험 모드(exam): 타이머 적용 시험 화면으로 이동
-     *     navigate('/exam', { state: { ...payload, timeLimitMin: payload.studyTimeMin } })
-     * - 타이머는 시험 화면에서 카운트다운 훅(useEffect + setInterval)으로 구현
-     *     1) 종료 시 자동 제출 핸들러 호출
-     *     2) 남은 시간은 전역/페이지 상태로 관리하여 재진입 시 복구 가능
-  *
-  * (시작 네비게이션) 여기에 추가 (구현방법 : 위 navigate 주석을 실제 코드로 적용하고
-  *  App.jsx에 /quiz, /exam 라우트를 개설. quiz는 단건 즉시 채점 흐름, exam은 timeLimitMin으로
-  *  타이머 시작 → 제출 시 일괄 채점 및 결과 페이지 이동)
-     */
+    // 먼저 onStart에 기회를 줘서(추천 모드 등) payload를 수정할 수 있게 함
+    if (typeof onStart === "function") {
+      try {
+        const result = await onStart(payload);
+        // onStart가 명시적으로 null을 반환하면 시작(네비게이션)을 취소
+        if (result === null) return;
+        // onStart는 수정된 payload를 반환할 수 있음
+        if (result && typeof result === 'object') {
+          payload = { ...payload, ...result };
+        }
+      } catch (e) {
+        console.error('onStart handler failed:', e);
+      }
+    }
 
-    // 콜백 방식(onStart) 우선, 미제공 시 콘솔 출력(추후 navigate로 교체 권장)
-    if (typeof onStart === "function") onStart(payload);
-    else console.log("START:", payload);
+    // 모드에 따라 적절한 페이지로 이동
+    if (payload.mode === "quiz") {
+      navigate('/problem', { state: payload });
+    } else if (payload.mode === "exam") {
+      navigate('/problem', { 
+        state: { 
+          ...payload, 
+          timeLimitMin: payload.studyTimeMin 
+        } 
+      });
+    }
   };
 
   // 키보드: Enter로 시작
@@ -141,7 +138,7 @@ export default function SelectPage({ onStart }) {
     window.addEventListener("keydown", onKeyDown);
     return () => window.removeEventListener("keydown", onKeyDown);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [canStart, subject, difficulty, mode, studyTime, showDifficulty, showMode, showTime]);
+  }, [canStart, subject, difficulty, mode, studyTime]);
 
   return (
     <div className="select-root">
@@ -150,7 +147,7 @@ export default function SelectPage({ onStart }) {
         <div className="header-inner">
           {/* 뒤로가기: 브라우저 히스토리로 이전 페이지 이동 */}
           <button className="icon-back" aria-label="뒤로가기" onClick={() => navigate(-1)}>
-           ←  Back 
+           ← 이전으로
           </button>
           <div className="brand">
             <div className="brand-icon">📘</div>
@@ -165,8 +162,17 @@ export default function SelectPage({ onStart }) {
         <section className="container">
           {/* 타이틀 */}
           <div className="section-head">
-            <h2 className="title">과목 선택</h2>
-            <p className="subtitle">학습할 과목과 설정을 선택하세요</p>
+            {props.isRecommend ? (
+              <>
+                <h2 className="title">오늘 추천 문제</h2>
+                <p className="subtitle">오답이 많은 태그를 기반으로 추천된 문제입니다</p>
+              </>
+            ) : (
+              <>
+                <h2 className="title">과목 선택</h2>
+                <p className="subtitle">학습할 과목과 설정을 선택하세요</p>
+              </>
+            )}
           </div>
 
           {/* 과목 선택 */}
@@ -203,10 +209,8 @@ export default function SelectPage({ onStart }) {
           <div className="block">
             <div className="block-head">
               <h3 className="block-title">난이도 선택</h3>
-              <HideToggle on={showDifficulty} onToggle={() => setShowDifficulty(v => !v)} />
             </div>
-            {showDifficulty && (
-              <div className="pill-grid">
+            <div className="pill-grid">
         {/* (난이도 선택 처리) 여기에 추가 (구현방법 : setDifficulty('초급'|'중급'|'고급') 호출 후
                     메모된 과목 데이터 또는 fetch 결과에서 해당 난이도 배열만 골라 setProblems(list)) */}
                 <Pill
@@ -228,17 +232,14 @@ export default function SelectPage({ onStart }) {
                   desc="심화 문제 중심"
                 />
               </div>
-            )}
           </div>
 
           {/* 학습 모드 (HIDE 토글) */}
           <div className="block">
             <div className="block-head">
               <h3 className="block-title">학습 모드</h3>
-              <HideToggle on={showMode} onToggle={() => setShowMode(v => !v)} />
             </div>
-            {showMode && (
-              <div className="mode-grid">
+            <div className="mode-grid">
         {/* (모드 선택 처리) 여기에 추가 (구현방법 : setMode('quiz'|'exam') 선택값 저장 →
                     handleStart에서 mode 값에 따라 navigate('/quiz'|'/exam', { state: payload })로 분기) */}
                 <ModeCard
@@ -255,17 +256,14 @@ export default function SelectPage({ onStart }) {
                   onClick={() => setMode("exam")}
                 />
               </div>
-            )}
           </div>
 
           {/* 학습 시간 (HIDE 토글) */}
           <div className="block">
             <div className="block-head">
               <h3 className="block-title">학습 시간 설정</h3>
-              <HideToggle on={showTime} onToggle={() => setShowTime(v => !v)} />
             </div>
-            {showTime && (
-              <div className="time-box">
+            <div className="time-box">
                 <div className="time-row">
                   <span className="time-label">학습 시간</span>
                   <span className="time-value">{studyTime}분</span>
@@ -276,7 +274,7 @@ export default function SelectPage({ onStart }) {
                 <input
                   type="range"
                   min={10}
-                  max={120}
+                  max={60}
                   step={5}
                   value={studyTime}
                   onChange={(e) => setStudyTime(e.target.value)}
@@ -284,10 +282,9 @@ export default function SelectPage({ onStart }) {
                 />
                 <div className="time-minmax">
                   <span>10분</span>
-                  <span>120분</span>
+                  <span>60분</span>
                 </div>
               </div>
-            )}
           </div>
 
           {/* 시작 버튼 */}
@@ -343,16 +340,3 @@ function ModeCard({ active, title, desc, onClick, highlight = false }) {
   );
 }
 
-function HideToggle({ on, onToggle }) {
-  return (
-    <button
-      type="button"
-      className={`hide-toggle ${on ? "on" : "off"}`}
-      onClick={onToggle}
-      aria-pressed={on}
-      title="HIDE ON/OFF"
-    >
-      {on ? "HIDE: OFF" : "HIDE: ON"}
-    </button>
-  );
-}
