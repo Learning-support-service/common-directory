@@ -439,6 +439,87 @@
     color: var(--text-secondary);
 }
 
+/* Achievement styles */
+.achievement-root { padding: 28px; }
+.achievement-header { text-align: center; margin-bottom: 18px; }
+.achievement-header h2 { font-size: 28px; margin-bottom: 6px; font-weight: 800; }
+.achievement-sub { color: var(--text-tertiary); margin-top: 0; }
+
+.achievement-stats { display: flex; gap: 16px; margin: 20px 40px; }
+.stat-box { flex: 1; border-radius: 12px; padding: 20px; color: #fff; display:flex; flex-direction:column; gap:8px; }
+.stat-box .stat-label { font-size: 14px; color: #ffffff; font-weight: 600; opacity: 0.95 }
+.stat-box .stat-value { font-size: 24px; font-weight: 700; color: #ffffff }
+.stat-box.orange { background: linear-gradient(90deg,#f59e0b,#f97316); }
+.stat-box.purple { background: linear-gradient(90deg,#7c3aed,#a78bfa); }
+.stat-box.green { background: linear-gradient(90deg,#10b981,#34d399); }
+
+.achievement-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin: 20px 40px; }
+.achievement-card { display:flex; align-items:center; gap:12px; padding: 14px; border-radius: 12px; background: linear-gradient(180deg, var(--card-bg-from), var(--card-bg-to)); border:1px solid var(--card-border); box-shadow: var(--shadow-sm); }
+.achievement-card.done { border-color: var(--icon-green-border); box-shadow: var(--shadow-md); }
+.achievement-icon { width:52px; height:52px; border-radius:10px; display:grid; place-items:center; font-size:22px; background: linear-gradient(180deg,var(--card-bg-from),var(--card-bg-to)); }
+.achievement-body { flex:1 }
+.achievement-title { font-weight:700; color:var(--text-primary) }
+.achievement-desc { color:var(--text-tertiary); font-size:13px }
+.achievement-badge { font-weight:700; color:var(--icon-green-color); background: rgba(16,185,129,0.08); padding:6px 8px; border-radius:10px; font-size:12px }
+.achievement-badge.badge-progress { /* '진행 중' 상태용: 텍스트 회색으로 변경 */
+    color: var(--text-muted);
+    /* 배경을 좀 더 중립적으로 해서 '달성 완료'와 구분되게 함 */
+    background: rgba(255,255,255,0.02);
+    border: 1px solid rgba(255,255,255,0.04);
+}
+.achievement-badge.badge-done { /* 기존 달성완료 스타일을 명시적으로 유지 */
+    color: var(--icon-green-color);
+    background: rgba(16,185,129,0.08);
+}
+
+.next-goal { margin: 28px 40px; padding: 18px; background: linear-gradient(180deg, var(--card-bg-from), var(--card-bg-to)); border-radius: 12px; border:1px solid var(--card-border) }
+.next-head { display:flex; align-items:center; justify-content:space-between; margin-bottom:12px }
+.next-meta { text-align:right }
+.next-title { font-weight:700 }
+.next-sub { color:var(--text-tertiary); font-size:13px }
+.progress-container { display:flex; align-items:center; gap:12px }
+.progress-track { flex:1; height:12px; background:var(--slider-track-bg); border-radius:999px; overflow:hidden }
+.progress-fill { height:100%; background: linear-gradient(90deg,#7c3aed,#6366f1); }
+.progress-label { min-width:64px; text-align:right; color:#6b7280 }
+
+/* Settings styles */
+.settings-root { padding: 24px; }
+.settings-section { margin-top: 16px; padding: 12px 0; border-top: 1px solid rgba(0,0,0,0.04) }
+.settings-section h4 { font-size: 18px; font-weight: 800; margin: 8px 0 12px 0; color: var(--text-primary) }
+.settings-row { display:flex; align-items:center; justify-content:space-between; gap:24px; padding: 12px 0 }
+
+/* Profile card */
+.profile-card { display:flex; align-items:center; gap:16px; padding:18px; background: linear-gradient(180deg, var(--card-bg-from), var(--card-bg-to)); border-radius:12px; border:1px solid var(--card-border) }
+.profile-avatar { width:56px; height:56px; border-radius:999px; background:linear-gradient(135deg,#6366f1,#7c3aed); color:#fff; display:grid; place-items:center; font-weight:800; font-size:20px }
+.profile-info { flex:1 }
+.profile-name { font-weight:800; font-size:16px; color: var(--text-primary) }
+.profile-email { color:var(--text-tertiary); font-size:13px }
+.profile-actions { display:flex; gap:8px }
+
+/* Toggle switch */
+.toggle-switch { width:52px; height:28px; border-radius:999px; background:#e6eafc; border:1px solid rgba(0,0,0,0.04); position:relative; cursor:pointer; display:inline-block }
+.toggle-switch span { position:absolute; top:3px; left:3px; width:22px; height:22px; border-radius:999px; background:#fff; transition:all .18s ease }
+.toggle-switch.on { background: linear-gradient(90deg,#7c3aed,#6366f1) }
+.toggle-switch.on span { transform: translateX(24px) }
+
+.settings-label { font-weight:700; color: var(--text-primary); font-size: 15px }
+.settings-desc { color: var(--text-tertiary); font-size:13px }
+.settings-root .btn.ghost { color: var(--text-secondary); border-color: var(--card-border); background: transparent }
+.settings-root .btn.ghost:disabled { opacity: 0.6 }
+.settings-root .btn { color: var(--text-secondary) }
+
+.danger-row { margin-top:12px }
+
+/* Modal styles */
+.modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.32); display: flex; align-items: center; justify-content: center; z-index: 60 }
+.modal { width: 460px; background: linear-gradient(180deg, var(--card-bg-from), var(--card-bg-to)); padding: 22px; border-radius: 12px; box-shadow: var(--shadow-lg) }
+.modal h3 { color: var(--text-primary) }
+.modal h3 { margin: 0 0 16px 0; font-size: 20px; font-weight: 900 }
+.modal-row { display:flex; flex-direction:column; gap:6px; margin-bottom:10px }
+.modal-row label { font-weight:700; color: var(--text-primary) }
+.modal-row input { height:38px; padding:8px 10px; border-radius:8px; border:1px solid var(--card-border) }
+.modal-actions { display:flex; justify-content:flex-end; gap:8px; margin-top:12px }
+
 
 /* Responsive */
 @media (max-width: 980px) {

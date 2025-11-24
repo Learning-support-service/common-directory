@@ -1,12 +1,12 @@
 import React from 'react';
 import { useNavigate, Outlet } from 'react-router-dom';
 import '../../styles/mypage.css'; //헤더, 탭, 공통 레이아웃 스타일 적용
-import { useTheme } from '../../contexts/ThemeContext';
+// import { useTheme } from '../../contexts/ThemeContext';
 
 
 const MyPage = () => {
     const navigate = useNavigate();
-    const { theme, toggleTheme } = useTheme();
+    // const { theme, toggleTheme } = useTheme();
 
 
     return (
@@ -15,9 +15,9 @@ const MyPage = () => {
             <header className="mypage-header">
                 <div className="mypage-header-inner">
                     <button className="mypage-btn-back" aria-label="뒤로가기" onClick={() => navigate(-1)}>← Back</button>
-                    <button className="header-btn theme-toggle" onClick={toggleTheme}>
+                    {/* <button className="header-btn theme-toggle" onClick={toggleTheme}>
                         {theme === 'dark' ? '☀️라이트' : '🌙 다크'}
-                    </button>
+                    </button> */}
                     <div className="mypage-brand">
                         <div className="mypage-brand-icon">📘</div>
                         <h1 className="mypage-brand-title">마이페이지</h1>
