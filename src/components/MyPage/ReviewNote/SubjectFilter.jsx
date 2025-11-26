@@ -1,6 +1,11 @@
 // Filters/SubjectFilter.jsx
 import React from "react";
-import { SUBJECT_MAP } from "./data";
+
+const SUBJECT_MAP = {
+    os: "운영체제",
+    ds: "자료구조",
+    web: "웹프레임워크",
+};
 
 const SubjectFilter = ({ selectedSubject, setSelectedSubject, totalCount }) => {
     const subjects = Object.keys(SUBJECT_MAP);

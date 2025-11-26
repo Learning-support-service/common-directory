@@ -1,24 +1,83 @@
+import React, { useEffect, useState } from 'react';
+
 const LearningTrendChart = () => {
+    const [weeklyLearningData, setWeeklyLearningData] = useState([
+        { day: '월', count: 0, color: '#6366F1' },
+        { day: '화', count: 0, color: '#6366F1' },
+        { day: '수', count: 0, color: '#6366F1' },
+        { day: '목', count: 0, color: '#6366F1' },
+        { day: '금', count: 0, color: '#6366F1' },
+        { day: '토', count: 0, color: '#6366F1' },
+        { day: '일', count: 0, color: '#6366F1' },
+    ]);
+    const [timeActivityData, setTimeActivityData] = useState([
+        { time: '오전(05~12)', count: 0, percent: 0, color: '#8B5CF6' },
+        { time: '오후(12~17)', count: 0, percent: 0, color: '#A78BFA' },
+        { time: '저녁(17~21)', count: 0, percent: 0, color: '#C4B5FD' },
+        { time: '밤(21~05)', count: 0, percent: 0, color: '#DDD6FE' },
+    ]);
 
+    useEffect(() => {
+        try {
+            const raw = localStorage.getItem('studyHistory');
+            const history = raw ? JSON.parse(raw) : [];
 
-    const weeklyLearningData = [
-        { day: '월', count: 11, color: '#6366F1' },
-        { day: '화', count: 6, color: '#6366F1' },
-        { day: '수', count: 10, color: '#6366F1' },
-        { day: '목', count: 11, color: '#6366F1' },
-        { day: '금', count: 17, color: '#6366F1' },
-        { day: '토', count: 18, color: '#6366F1' },
-        { day: '일', count: 14, color: '#6366F1' },
-    ];
+            // 지난 7일간의 날짜 계산
+            const today = new Date();
+            const dayOrder = ['일', '월', '화', '수', '목', '금', '토'];
+            const last7Days = {};
+            for (let i = 6; i >= 0; i--) {
+                const d = new Date(today);
+                d.setDate(today.getDate() - i);
+                const dateStr = d.toISOString().split('T')[0];
+                const dayIdx = d.getDay();
+                const dayName = dayOrder[dayIdx];
+                last7Days[dateStr] = { day: dayName, count: 0 };
+            }
 
-    const timeActivityData = [
-        { time: '오전', count: 11, percent: 25, color: '#8B5CF6' },
-        { time: '오후', count: 6, percent: 29, color: '#A78BFA' },
-        { time: '저녁', count: 10, percent: 45, color: '#C4B5FD' },
-        { time: '밤', count: 11, percent: 20, color: '#DDD6FE' },
-    ];
-        {/*차트 비율 설정을 위한 1주 내 학습 최대값*/}
-    const maxWeeklyCount = Math.max(...weeklyLearningData.map(d => d.count));
+            // 주간 학습량 계산
+            history.forEach(rec => {
+                if (rec.date) {
+                    const dateStr = rec.date.split(' ')[0];
+                    if (dateStr in last7Days) {
+                        last7Days[dateStr].count += Number(rec.total || 0);
+                    }
+                }
+            });
+
+            const weekly = Object.values(last7Days).map(d => ({ ...d, color: '#6366F1' }));
+            setWeeklyLearningData(weekly);
+
+            // 시간대별 학습 (date에서 시간 추출해 오전/오후/저녁/밤 분류)
+            const timeStats = { 오전: 0, 오후: 0, 저녁: 0, 밤: 0 };
+            history.forEach(rec => {
+                if (rec.date) {
+                    const match = rec.date.match(/(\d{2}):(\d{2})/);
+                    if (match) {
+                        const hour = parseInt(match[1]);
+                        let timeSlot = '밤';
+                        if (hour >= 5 && hour < 12) timeSlot = '오전';
+                        else if (hour >= 12 && hour < 17) timeSlot = '오후';
+                        else if (hour >= 17 && hour < 21) timeSlot = '저녁';
+                        timeStats[timeSlot] += Number(rec.total || 0);
+                    }
+                }
+            });
+
+            const totalTime = Object.values(timeStats).reduce((a, b) => a + b, 0) || 1;
+            const timeData = [
+                { time: '오전', count: timeStats['오전'], percent: Math.round((timeStats['오전'] / totalTime) * 100), color: '#8B5CF6' },
+                { time: '오후', count: timeStats['오후'], percent: Math.round((timeStats['오후'] / totalTime) * 100), color: '#A78BFA' },
+                { time: '저녁', count: timeStats['저녁'], percent: Math.round((timeStats['저녁'] / totalTime) * 100), color: '#C4B5FD' },
+                { time: '밤', count: timeStats['밤'], percent: Math.round((timeStats['밤'] / totalTime) * 100), color: '#DDD6FE' },
+            ];
+            setTimeActivityData(timeData);
+        } catch (e) {
+            console.error('failed to load learning trend data', e);
+        }
+    }, []);
+
+    const maxWeeklyCount = Math.max(...weeklyLearningData.map(d => d.count), 1);
     return (
         <div className="analysis-section learning-trend-section">
             <h3 className="section-title">학습 트렌드</h3>

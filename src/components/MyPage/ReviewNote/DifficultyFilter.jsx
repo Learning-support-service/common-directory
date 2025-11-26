@@ -1,6 +1,11 @@
 // Filters/DifficultyFilter.jsx
 import React from "react";
-import { DIFFICULTY_MAP } from "./data";
+
+const DIFFICULTY_MAP = {
+    easy: "초급",
+    medium: "중급",
+    hard: "고급",
+};
 
 const DifficultyFilter = ({ selectedDifficulty, setSelectedDifficulty }) => {
     const diffs = Object.keys(DIFFICULTY_MAP);

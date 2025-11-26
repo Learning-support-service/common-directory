@@ -1,12 +1,41 @@
-const SubjectProgressChart = () => {
+import React, { useEffect, useState } from 'react';
 
-    {/*테스트를 위한 목업데이터 */}
-    const subjectData = [
-        { name: '운영체제', percent: 25, score: '10/40' },
-        { name: '자료구조', percent: 88, score: '56/64' },
-        { name: '웹프레임워크', percent: 75, score: '30/40' },
-    ];
-    {/*퍼센트 별 수준, 색깔 구분 함수 */}
+const SubjectProgressChart = () => {
+    const [subjectData, setSubjectData] = useState([]);
+
+    useEffect(() => {
+        // studyHistory에서 과목별 정답률 계산
+        try {
+            const raw = localStorage.getItem('studyHistory');
+            const history = raw ? JSON.parse(raw) : [];
+
+            // 과목별로 정답 수, 총 문제 수 집계
+            const subjectStats = {};
+            history.forEach(rec => {
+                const key = rec.subject || 'unknown';
+                if (!subjectStats[key]) {
+                    subjectStats[key] = { total: 0, correct: 0, label: rec.subjectLabel || key };
+                }
+                subjectStats[key].total += Number(rec.total || 0);
+                subjectStats[key].correct += Number(rec.correctCount || 0);
+            });
+
+            // 과목별 정답률 계산
+            const data = Object.entries(subjectStats).map(([key, stats]) => {
+                const percent = stats.total ? Math.round((stats.correct / stats.total) * 100) : 0;
+                return {
+                    name: stats.label,
+                    percent,
+                    score: `${stats.correct}/${stats.total}`
+                };
+            });
+
+            setSubjectData(data);
+        } catch (e) {
+            console.error('failed to load subject progress data', e);
+        }
+    }, []);
+
     const getColor = (percent) => {
         let rating, color, textColorClass;
         if (percent < 30) {

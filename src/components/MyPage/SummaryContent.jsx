@@ -48,7 +48,7 @@ const SummaryContent = () => {
                 const recent = history.slice(0, 5).map((rec) => ({
                     date: rec.date ? rec.date.split(' ')[0] : '',
                     content: `${rec.total || 0}개 문제 풀이 · 정답률 ${rec.total ? Math.round((rec.correctCount||0) / rec.total * 100) : 0}%`,
-                    rating: (rec.correctCount && rec.total && (rec.correctCount / rec.total) >= 0.85) ? '우수' : ((rec.correctCount && rec.total && (rec.correctCount / rec.total) >= 0.7) ? '보통' : '나쁨')
+                    rating: (rec.correctCount && rec.total && (rec.correctCount / rec.total) >= 0.85) ? '우수' : ((rec.correctCount && rec.total && (rec.correctCount / rec.total) >= 0.5) ? '보통' : '미흡')
                 }));
                 setRecentActivities(recent);
 
