@@ -26,6 +26,15 @@ export default function Home() {
     correctRate: 0,
     studyStreak: 0
   });
+  useEffect(() => {
+      const refreshUser = () => {
+        // localStorage에서 닉네임 다시 읽기
+        const cur = JSON.parse(localStorage.getItem('currentUser'));
+        setUserName(cur?.name || '사용자');
+      };
+      window.addEventListener('nicknameChanged', refreshUser);
+      return () => window.removeEventListener('nicknameChanged', refreshUser);
+    }, []);
   
   // 실제 최근 활동 데이터
   const [recentActivities, setRecentActivities] = useState([]);
@@ -56,6 +65,8 @@ export default function Home() {
       calculateStats()
       loadRecentActivities()
     }
+
+    
     
     // 초기 로드
     loadData()
