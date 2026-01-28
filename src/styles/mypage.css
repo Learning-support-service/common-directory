@@ -37,8 +37,8 @@
     outline: none;
 }
 .selectTab .tab-btn.active {
-    color: #4a74f5;
-    border-bottom-color: #4a74f5;
+    color: #808080;
+    border-bottom-color: #808080;
     font-weight: 700;
 }
 
@@ -92,7 +92,7 @@
 .mypage-brand-icon {
     width: 32px; height: 32px; border-radius: 8px;
     display: grid; place-items: center; font-size: 18px; color: #fff;
-    background: linear-gradient(135deg, #2563eb, #7c3aed);
+    background: #505050;
 }
 .mypage-brand-title { 
     font-weight: 700; 
@@ -124,7 +124,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background: linear-gradient(100deg, #5d5ce6, #a76ff6); 
+    background: linear-gradient(100deg, #606060, #808080); 
     padding: 30px;
     border-radius: 12px;
     color: #fff;
@@ -204,7 +204,7 @@
     align-items: center;
     gap: 10px;
     margin-bottom: 8px;
-    color: #4a74f5; 
+    color: #808080; 
 }
 
 /*추천/조언 탭 */
@@ -231,14 +231,14 @@
     padding: 8px 15px;
     border: none;
     border-radius: 6px;
-    background: #4a74f5;
+    background: #606060;
     color: white;
     font-weight: 600;
     cursor: pointer;
     transition: background 0.2s;
 }
 .recommandTab button:hover {
-    background: #3a63e0;
+    background: #505050;
 }
 
 /*최근 활동 목록 */
@@ -465,7 +465,7 @@
     align-items: center;
     margin-bottom: 2rem;
     
-    background: linear-gradient(135deg, #a855f7, #6366f1); 
+    background: linear-gradient(135deg, #606060, #808080); 
     color: white;
 }
 .match-card-content p { margin: 0; opacity: 0.9; }
@@ -526,7 +526,7 @@
 }
 .subject-meta .accent {
     font-weight: 600;
-    color: #3b82f6;
+    color: #808080;
 }
 .subject-style {
     font-size: 0.875rem;
@@ -625,9 +625,9 @@
     background-image: none;
     background-clip: border-box;
 }
-.stat-box.orange { background: linear-gradient(90deg,#f59e0b,#f97316); }
-.stat-box.purple { background: linear-gradient(90deg,#7c3aed,#a78bfa); }
-.stat-box.green { background: linear-gradient(90deg,#10b981,#34d399); }
+.stat-box.orange { background: linear-gradient(90deg,#707070,#606060); }
+.stat-box.purple { background: linear-gradient(90deg,#606060,#505050); }
+.stat-box.green { background: linear-gradient(90deg,#808080,#707070); }
 
 .achievement-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin: 20px 40px; }
 .achievement-card { display:flex; align-items:center; gap:12px; padding: 14px; border-radius: 12px; background: linear-gradient(180deg, var(--card-bg-from), var(--card-bg-to)); border:1px solid var(--card-border); box-shadow: var(--shadow-sm); }
@@ -655,7 +655,7 @@
 .next-sub { color:var(--text-tertiary); font-size:13px }
 .progress-container { display:flex; align-items:center; gap:12px }
 .progress-track { flex:1; height:12px; background:var(--slider-track-bg); border-radius:999px; overflow:hidden }
-.progress-fill { height:100%; background: linear-gradient(90deg,#7c3aed,#6366f1); }
+.progress-fill { height:100%; background: linear-gradient(90deg,#606060,#808080); }
 .progress-label { min-width:64px; text-align:right; color:#6b7280 }
 
 /*설정 스타일*/
@@ -666,7 +666,7 @@
 
 /*프로필 카드*/
 .profile-card { display:flex; align-items:center; gap:16px; padding:18px; background: linear-gradient(180deg, var(--card-bg-from), var(--card-bg-to)); border-radius:12px; border:1px solid var(--card-border) }
-.profile-avatar { width:56px; height:56px; border-radius:999px; background:linear-gradient(135deg,#6366f1,#7c3aed); color:#fff; display:grid; place-items:center; font-weight:800; font-size:20px }
+.profile-avatar { width:56px; height:56px; border-radius:999px; background:#606060; color:#fff; display:grid; place-items:center; font-weight:800; font-size:20px }
 .profile-info { flex:1 }
 .profile-name { font-weight:800; font-size:16px; color: var(--text-primary) }
 .profile-email { color:var(--text-tertiary); font-size:13px }
@@ -675,7 +675,7 @@
 /*토글 버튼*/
 .toggle-switch { width:52px; height:28px; border-radius:999px; background:#e6eafc; border:1px solid rgba(0,0,0,0.04); position:relative; cursor:pointer; display:inline-block }
 .toggle-switch span { position:absolute; top:3px; left:3px; width:22px; height:22px; border-radius:999px; background:#fff; transition:all .18s ease }
-.toggle-switch.on { background: linear-gradient(90deg,#7c3aed,#6366f1) }
+.toggle-switch.on { background: linear-gradient(90deg,#606060,#808080) }
 .toggle-switch.on span { transform: translateX(24px) }
 
 .settings-label { font-weight:700; color: var(--text-primary); font-size: 15px }
@@ -696,11 +696,134 @@
 .modal-row input { height:38px; padding:8px 10px; border-radius:8px; border:1px solid var(--card-border) }
 .modal-actions { display:flex; justify-content:flex-end; gap:8px; margin-top:12px }
 
+/* Responsive Breakpoints */
+/* Mobile: 0-599px */
+@media (max-width: 599px) {
+  .mypage-container {
+    padding: 1% 4%;
+  }
+  
+  .mypage-header-inner {
+    padding: 0 16px;
+  }
+  
+  .mypage-header-inner .mypage-brand {
+    margin: 0;
+  }
+  
+  .selectTab {
+    margin: 20px 16px;
+  }
+  
+  .welcomeTab {
+    flex-direction: column;
+    text-align: center;
+    padding: 24px;
+  }
+  
+  .welcomeTab .welcome {
+    font-size: 20px;
+  }
+  
+  .welcomeTab .progress {
+    text-align: center;
+    margin-top: 16px;
+  }
+  
+  .summaryTab {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+  
+  .achievement-stats,
+  .achievement-cards {
+    margin: 20px 16px;
+    flex-direction: column;
+  }
+  
+  .achievement-cards {
+    grid-template-columns: 1fr;
+  }
+  
+  .next-goal {
+    margin: 28px 16px;
+  }
+  
+  .settings-root {
+    padding: 16px;
+  }
+  
+  .settings-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+  
+  .profile-card {
+    flex-direction: column;
+    text-align: center;
+  }
+  
+  .modal {
+    width: calc(100% - 32px);
+    margin: 16px;
+  }
+}
 
-/*반응*/
-@media (max-width: 980px) {
-    .mypage-header-inner { padding: 0 16px; }
-    .mypage-header-inner .mypage-brand { margin: 0; }
-    .selectTab { margin: 20px 16px; }
-    .mypage-container { padding: 4%; }
+/* Small Tablet: 600-1023px */
+@media (min-width: 600px) and (max-width: 1023px) {
+  .mypage-header-inner {
+    padding: 0 16px;
+  }
+  
+  .mypage-header-inner .mypage-brand {
+    margin: 0;
+  }
+  
+  .selectTab {
+    margin: 20px 16px;
+  }
+  
+  .mypage-container {
+    padding: 4%;
+  }
+  
+  .summaryTab {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .achievement-cards {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .achievement-stats {
+    flex-direction: row;
+    gap: 12px;
+  }
+}
+
+/* Large Tablet: 1024-1439px */
+@media (min-width: 1024px) and (max-width: 1439px) {
+  .summaryTab {
+    grid-template-columns: repeat(4, 1fr);
+  }
+  
+  .achievement-cards {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* Desktop: 1440px+ */
+@media (min-width: 1440px) {
+  .mypage-container {
+    max-width: 1600px;
+    margin: 0 auto;
+  }
+  
+  .achievement-stats,
+  .achievement-cards,
+  .next-goal {
+    margin-left: 60px;
+    margin-right: 60px;
+  }
 }

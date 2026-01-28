@@ -47,7 +47,7 @@
   width: 40px;
   height: 40px;
   border-radius: 10px;
-  background: linear-gradient(135deg, #2563eb, #7c3aed);
+  background: #505050;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -219,18 +219,18 @@
 }
 
 .action-icon-box.green {
-  background: linear-gradient(135deg, #10b981, #059669);
-  box-shadow: 0 6px 18px rgba(16, 185, 129, 0.35);
+  background: #707070;
+  box-shadow: 0 6px 18px rgba(112, 112, 112, 0.35);
 }
 
 .action-icon-box.yellow {
-  background: linear-gradient(135deg, #fbbf24, #f59e0b);
-  box-shadow: 0 6px 18px rgba(251, 191, 36, 0.35);
+  background: #606060;
+  box-shadow: 0 6px 18px rgba(96, 96, 96, 0.35);
 }
 
 .action-icon-box.blue {
-  background: linear-gradient(135deg, #3b82f6, #2563eb);
-  box-shadow: 0 6px 18px rgba(59, 130, 246, 0.35);
+  background: #808080;
+  box-shadow: 0 6px 18px rgba(128, 128, 128, 0.35);
 }
 
 .action-title {
@@ -355,14 +355,9 @@
   font-size: 14px;
 }
 
-@media (max-width: 1024px) {
-  .stats-grid,
-  .action-grid {
-    grid-template-columns: 1fr;
-  }
-}
-
-@media (max-width: 768px) {
+/* Responsive Breakpoints */
+/* Mobile: 0-599px */
+@media (max-width: 599px) {
   .home-main {
     padding: 24px 16px;
   }
@@ -376,7 +371,60 @@
   }
 
   .header-actions {
-    flex-direction: column;
-    gap: 8px;
+    gap: 6px;
+  }
+  
+  .header-btn {
+    padding: 8px 12px;
+    font-size: 13px;
+  }
+
+  .stats-grid,
+  .action-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  
+  .stat-card {
+    padding: 20px;
+  }
+  
+  .action-card {
+    padding: 24px;
+  }
+}
+
+/* Small Tablet: 600-1023px */
+@media (min-width: 600px) and (max-width: 1023px) {
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .action-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .home-main {
+    padding: 32px 24px;
+  }
+}
+
+/* Large Tablet: 1024-1439px */
+@media (min-width: 1024px) and (max-width: 1439px) {
+  .stats-grid,
+  .action-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* Desktop: 1440px+ */
+@media (min-width: 1440px) {
+  .home-main {
+    max-width: 1400px;
+    padding: 56px 32px;
+  }
+  
+  .greeting-title {
+    font-size: 48px;
   }
 }

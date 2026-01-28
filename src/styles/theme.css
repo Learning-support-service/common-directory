@@ -3,20 +3,20 @@
 /* 다크 모드 (기본) */
 :root[data-theme="dark"] {
   /* 배경 */
-  --bg-primary: #0b1020;
-  --bg-gradient-1: rgba(37, 99, 235, 0.12);
-  --bg-gradient-2: rgba(168, 85, 247, 0.12);
+  --bg-primary: #000000;
+  --bg-gradient-1: rgba(50, 50, 50, 0.12);
+  --bg-gradient-2: rgba(70, 70, 70, 0.12);
   
   /* 카드/컨테이너 */
-  --card-bg-from: rgba(255, 255, 255, 0.08);
-  --card-bg-to: rgba(255, 255, 255, 0.04);
-  --card-border: rgba(255, 255, 255, 0.12);
-  --card-hover-bg-from: rgba(255, 255, 255, 0.12);
-  --card-hover-bg-to: rgba(255, 255, 255, 0.06);
+  --card-bg-from: #1a1a1a;
+  --card-bg-to: #1a1a1a;
+  --card-border: rgba(255, 255, 255, 0.2);
+  --card-hover-bg-from: #2a2a2a;
+  --card-hover-bg-to: #2a2a2a;
   
   /* 헤더 */
-  --header-bg: rgba(11, 16, 32, 0.4);
-  --header-border: rgba(255, 255, 255, 0.06);
+  --header-bg: rgba(0, 0, 0, 0.9);
+  --header-border: rgba(255, 255, 255, 0.15);
   
   /* 텍스트 */
   --text-primary: #f9fafb;
@@ -25,21 +25,21 @@
   --text-muted: #9ca3af;
   
   /* 버튼 */
-  --btn-bg: rgba(255, 255, 255, 0.06);
-  --btn-border: rgba(255, 255, 255, 0.18);
-  --btn-hover-bg: rgba(255, 255, 255, 0.1);
-  --btn-hover-border: rgba(255, 255, 255, 0.24);
+  --btn-bg: #2a2a2a;
+  --btn-border: rgba(255, 255, 255, 0.2);
+  --btn-hover-bg: #3a3a3a;
+  --btn-hover-border: rgba(255, 255, 255, 0.3);
   
   /* 아이콘 배경 */
-  --icon-blue-bg: rgba(59, 130, 246, 0.2);
-  --icon-blue-color: #93c5fd;
-  --icon-blue-border: rgba(147, 197, 253, 0.3);
-  --icon-green-bg: rgba(34, 197, 94, 0.2);
-  --icon-green-color: #86efac;
-  --icon-green-border: rgba(134, 239, 172, 0.3);
-  --icon-orange-bg: rgba(251, 146, 60, 0.2);
-  --icon-orange-color: #fdba74;
-  --icon-orange-border: rgba(253, 186, 116, 0.3);
+  --icon-blue-bg: rgba(100, 100, 100, 0.3);
+  --icon-blue-color: #b0b0b0;
+  --icon-blue-border: rgba(180, 180, 180, 0.3);
+  --icon-green-bg: rgba(120, 120, 120, 0.3);
+  --icon-green-color: #c0c0c0;
+  --icon-green-border: rgba(190, 190, 190, 0.3);
+  --icon-orange-bg: rgba(80, 80, 80, 0.3);
+  --icon-orange-color: #a0a0a0;
+  --icon-orange-border: rgba(160, 160, 160, 0.3);
   
   /* 그림자 */
   --shadow-sm: 0 8px 24px rgba(0, 0, 0, 0.2);
@@ -47,77 +47,77 @@
   --shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.3);
   
   /* 슬라이더 */
-  --slider-track-bg: rgba(255, 255, 255, 0.1);
-  --slider-thumb-bg: #2563eb;
-  --slider-thumb-border: #93c5fd;
-  --slider-thumb-shadow: rgba(37, 99, 235, 0.3);
-  --time-value-color: #93c5fd;
+  --slider-track-bg: rgba(255, 255, 255, 0.15);
+  --slider-thumb-bg: #808080;
+  --slider-thumb-border: #a0a0a0;
+  --slider-thumb-shadow: rgba(128, 128, 128, 0.3);
+  --time-value-color: #b0b0b0;
 }
 
 /* 라이트 모드 */
 :root[data-theme="light"] {
   /* 배경 */
-  --bg-primary: #f9fafb;
+  --bg-primary: #ffffff;
   --bg-gradient-1: transparent;
   --bg-gradient-2: transparent;
   
   /* 카드/컨테이너 */
-  --card-bg-from: #ffffff;
-  --card-bg-to: #ffffff;
-  --card-border: #e5e7eb;
-  --card-hover-bg-from: #f9fafb;
-  --card-hover-bg-to: #f9fafb;
+  --card-bg-from: #f5f5f5;
+  --card-bg-to: #f5f5f5;
+  --card-border: rgba(0, 0, 0, 0.2);
+  --card-hover-bg-from: #e5e5e5;
+  --card-hover-bg-to: #e5e5e5;
   
   /* 헤더 */
   --header-bg: rgba(255, 255, 255, 0.9);
-  --header-border: #e5e7eb;
+  --header-border: rgba(0, 0, 0, 0.15);
   
   /* 텍스트 */
-  --text-primary: #111827;
-  --text-secondary: #374151;
-  --text-tertiary: #6b7280;
-  --text-muted: #9ca3af;
+  --text-primary: #000000;
+  --text-secondary: #333333;
+  --text-tertiary: #666666;
+  --text-muted: #999999;
   
   /* 버튼 */
-  --btn-bg: #ffffff;
-  --btn-border: #e5e7eb;
-  --btn-hover-bg: #f9fafb;
-  --btn-hover-border: #d1d5db;
+  --btn-bg: #f5f5f5;
+  --btn-border: rgba(0, 0, 0, 0.2);
+  --btn-hover-bg: #e0e0e0;
+  --btn-hover-border: rgba(0, 0, 0, 0.3);
   
   /* 아이콘 배경 */
-  --icon-blue-bg: #dbeafe;
-  --icon-blue-color: #2563eb;
-  --icon-blue-border: #bfdbfe;
-  --icon-green-bg: #d1fae5;
-  --icon-green-color: #059669;
-  --icon-green-border: #a7f3d0;
-  --icon-orange-bg: #fed7aa;
-  --icon-orange-color: #ea580c;
-  --icon-orange-border: #fdba74;
+  --icon-blue-bg: #e0e0e0;
+  --icon-blue-color: #606060;
+  --icon-blue-border: #c0c0c0;
+  --icon-green-bg: #d5d5d5;
+  --icon-green-color: #505050;
+  --icon-green-border: #b5b5b5;
+  --icon-orange-bg: #cccccc;
+  --icon-orange-color: #404040;
+  --icon-orange-border: #aaaaaa;
   
   /* 그림자 */
   --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
   --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
 
   /* 퀴즈/시험 모드 */
-  --primary: #2563eb;
-  --primary-light: #3b82f6;
-  --primary-darker: #1d4ed8;
-  --primary-rgb: 37, 99, 235;
+  --primary: #606060;
+  --primary-light: #808080;
+  --primary-darker: #404040;
+  --primary-rgb: 96, 96, 96;
   
-  --success: #059669;
-  --success-light: #d1fae5;
-  --success-darker: #047857;
+  --success: #707070;
+  --success-light: #e0e0e0;
+  --success-darker: #505050;
   
-  --error: #dc2626;
-  --error-light: #fee2e2;
-  --error-darker: #b91c1c;
+  --error: #505050;
+  --error-light: #d5d5d5;
+  --error-darker: #303030;
   --shadow-lg: 0 8px 16px rgba(0, 0, 0, 0.15);
   
   /* 슬라이더 */
-  --slider-track-bg: #e5e7eb;
-  --slider-thumb-bg: #2563eb;
+  --slider-track-bg: #e0e0e0;
+  --slider-thumb-bg: #808080;
   --slider-thumb-border: #ffffff;
-  --slider-thumb-shadow: rgba(37, 99, 235, 0.2);
-  --time-value-color: #2563eb;
+  --slider-thumb-shadow: rgba(128, 128, 128, 0.2);
+  --time-value-color: #606060;
 }
